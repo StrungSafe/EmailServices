@@ -57,13 +57,14 @@
 
         private void SendMessage(MailAddress fromAddress, MailAddress toAddress, string subject, string body)
         {
-            using (
-                var smtpClient = new SmtpClient
-                                     {
-                                         Host = credentials.HostName, Port = credentials.Port, EnableSsl = true,
-                                         DeliveryMethod = SmtpDeliveryMethod.Network, UseDefaultCredentials = false,
-                                         Credentials = NewNetworkCredential(fromAddress.Address, credentials.Password)
-                                     })
+            using (var smtpClient = new SmtpClient
+                                        {
+                                            Host = credentials.HostName, Port = credentials.Port, EnableSsl = true,
+                                            DeliveryMethod = SmtpDeliveryMethod.Network, UseDefaultCredentials = false,
+                                            Credentials = NewNetworkCredential(
+                                                fromAddress.Address,
+                                                credentials.Password)
+                                        })
             {
                 using (var mailMessage = NewMailMessage(fromAddress, toAddress, subject, body))
                 {
